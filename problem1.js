@@ -1,22 +1,20 @@
-function deepEqual(objA, objB){
-  if(objA === objB) return true;
-  if(objA === null || objB === null) return false;
-  if(typeof objA!== 'object' || typeof objB!== 'object') return false;
+function deepEqual(objA, objB) {
+  if (objA === objB) return true;
+
+  if (objA === null || objB === null) return false;
+  if (typeof objA!== 'object' || typeof objB!== 'object') return false;
 
   const keysA = Object.keys(objA);
   const keysB = Object.keys(objB);
 
-  if(keysA.length!== keysB.length) return false;
+  if (keysA.length!== keysB.length) return false;
 
-  for(let key of keysA){
-    if(!keysB.includes(key)) return false;
-
-    if(typeof objA[key] === 'object'){
-      if(!deepEqual(objA[key], objB[key])) return false;
-    } else {
-      if(objA[key]!== objB[key]) return false;
-    }
+  for (const key of keysA) {
+    if (!keysB.includes(key)) return false;
+    if (!deepEqual(objA[key], objB[key])) return false;
   }
-
   return true;
 }
+
+console.log(deepEqual({ a: 1, b: { c: 2 } }, { a: 1, b: { c: 2 } })) // true
+console.log(deepEqual({ a: 1, b: { c: 2 } }, { a: 1, b: { c: 3 } })) // false
